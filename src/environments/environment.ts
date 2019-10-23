@@ -4,16 +4,7 @@
 
 export const environment = {
   production: false,
-  firebase: {
-    apiKey: "",
-    authDomain: "",
-    databaseURL: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-    appId: "",
-    measurementId: ""
-  }
+  url: 'http://127.0.0.1:3000',
 };
 
 /*

@@ -1,13 +1,4 @@
 export const environment = {
   production: true,
-  firebase: {
-    apiKey: "",
-    authDomain: "",
-    databaseURL: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-    appId: "",
-    measurementId: ""
-  }
+  url: 'http://192.168.33.76:3000',
 };

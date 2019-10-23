@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FirebaseService } from '../services/firebase.service';
-import { ActivatedRoute } from '@angular/router';
-import { Router, Params } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
+import { MongodbService } from '../services/mongodb.service';
 
 @Component({
   selector: 'app-boards',
@@ -14,20 +13,18 @@ export class BoardsComponent implements OnInit {
   boards: Array<any>;
 
   constructor(
-    public firebaseService: FirebaseService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private mongodbService: MongodbService
   ) { }
 
   ngOnInit() {
 
-    this.firebaseService.getBoards(
-      this.activatedRoute.snapshot.paramMap.get('date')
-    )
-    .subscribe(result => {
-      console.log(result);
-      this.boards = result;
-    });
+    this.mongodbService.getBoards(this.activatedRoute.snapshot.paramMap.get('date'))
+      .subscribe(result => {
+        console.log(result);
+        this.boards = result.data;
+      });
   }
 
   toTitles(board) {

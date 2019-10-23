@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FirebaseService } from '../services/firebase.service';
-import { ActivatedRoute } from '@angular/router';
-import { Router, Params } from '@angular/router';
+import { ActivatedRoute, Router, Params  } from '@angular/router';
+import { MongodbService } from '../services/mongodb.service';
 
 @Component({
   selector: 'app-content',
@@ -11,18 +10,18 @@ import { Router, Params } from '@angular/router';
 export class ContentComponent implements OnInit {
 
   constructor(
-    public firebaseService: FirebaseService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private mongodbService: MongodbService
   ) { }
 
   ngOnInit() {
 
-    this.firebaseService.getContent(
+    this.mongodbService.getContent(
       this.activatedRoute.snapshot.paramMap.get('date'),
       this.activatedRoute.snapshot.paramMap.get('board'),
-      this.activatedRoute.snapshot.paramMap.get('no')
-    )
+      this.activatedRoute.snapshot.paramMap.get('id')
+      )
     .subscribe(result => {
       console.log(result);
     });

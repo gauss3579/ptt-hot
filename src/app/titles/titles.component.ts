@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FirebaseService } from '../services/firebase.service';
-import { ActivatedRoute } from '@angular/router';
-import { Router, Params } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
+import { MongodbService } from '../services/mongodb.service';
+
 @Component({
   selector: 'app-titles',
   templateUrl: './titles.component.html',
@@ -12,31 +12,32 @@ export class TitlesComponent implements OnInit {
   titles: Array<any>;
 
   constructor(
-    public firebaseService: FirebaseService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private mongodbService: MongodbService
   ) { }
 
   ngOnInit() {
-    this.firebaseService.getTitles(
+
+    this.mongodbService.getTitles(
       this.activatedRoute.snapshot.paramMap.get('date'),
       this.activatedRoute.snapshot.paramMap.get('board')
-    )
-    .subscribe(result => {
-      console.log(result);
-      this.titles = result;
-    });
+      )
+      .subscribe(result => {
+        console.log(result);
+        this.titles = result.data;
+      });
   }
 
-  toContent(no) {
-    console.log(no);
+  toContent(id) {
+    console.log(id);
     this.router.navigate([
       '/boards/' +
       this.activatedRoute.snapshot.paramMap.get('date') +
       '/' +
       this.activatedRoute.snapshot.paramMap.get('board') +
       '/' +
-      no
+      id
       ]);
   }
 

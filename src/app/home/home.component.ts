@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FirebaseService } from '../services/firebase.service';
 import { Router, Params } from '@angular/router';
+import { MongodbService } from '../services/mongodb.service';
+
 
 @Component({
   selector: 'app-home',
@@ -9,31 +10,23 @@ import { Router, Params } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  ageValue: number = 0;
-  searchValue: string = "";
-  items: Array<any>;
-  age_filtered_items: Array<any>;
-  name_filtered_items: Array<any>;
-
-
-  dates: Array<any>;
-
+  dates: [];
 
   constructor(
-    public firebaseService: FirebaseService,
-    private router: Router
+    private router: Router,
+    private mongodbService: MongodbService
   ) { }
 
   ngOnInit() {
-    this.getData();
+    this.getDates();
   }
 
-  getData() {
+  getDates() {
 
-    this.firebaseService.getAllDate()
+    this.mongodbService.getDates()
       .subscribe(result => {
         console.log(result);
-        this.dates = result;
+        this.dates = result.data;
       });
 
   }
@@ -42,44 +35,5 @@ export class HomeComponent implements OnInit {
     console.log(date);
     this.router.navigate(['/boards/' + date]);
   }
-
-
-  // viewDetails(item) {
-  //   this.router.navigate(['/details/' + item.payload.doc.id]);
-  // }
-
-  // capitalizeFirstLetter(value) {
-  //   return value.charAt(0).toUpperCase() + value.slice(1);
-  // }
-
-  // searchByName() {
-  //   let value = this.searchValue.toLowerCase();
-  //   this.firebaseService.searchUsers(value)
-  //     .subscribe(result => {
-  //       this.name_filtered_items = result;
-  //       this.items = this.combineLists(result, this.age_filtered_items);
-  //     })
-  // }
-
-  // rangeChange(event) {
-  //   this.firebaseService.searchUsersByAge(event.value)
-  //     .subscribe(result => {
-  //       this.age_filtered_items = result;
-  //       this.items = this.combineLists(result, this.name_filtered_items);
-  //     })
-  // }
-
-  // combineLists(a, b) {
-  //   let result = [];
-
-  //   a.filter(x => {
-  //     return b.filter(x2 => {
-  //       if (x2.payload.doc.id == x.payload.doc.id) {
-  //         result.push(x2);
-  //       }
-  //     });
-  //   });
-  //   return result;
-  // }
 
 }

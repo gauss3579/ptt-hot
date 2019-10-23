@@ -10,5 +10,5 @@ export const rootRouterConfig: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'boards/:date', component: BoardsComponent },
   { path: 'boards/:date/:board', component: TitlesComponent },
-  { path: 'boards/:date/:board/:no', component: ContentComponent },
+  { path: 'boards/:date/:board/:id', component: ContentComponent },
 ];
